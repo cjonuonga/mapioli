@@ -122,6 +122,25 @@ class App(customtkinter.CTk):
         elif new_map == "Google Satellite":
             self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
+
+    ''' 
+    NEXT STEPS:
+    -----------
+    - We're going to need some type of database slq, mongodb.
+    - Automatic search filler.
+    - Pin Marker (tkinter library).
+    - Favorites Section.
+    - Pictures for each hiking spot, camera icon.
+    - Highlight hiking trail in addition to marker.
+
+    
+    
+    
+    
+    
+    '''
+
+
     def on_closing(self, event=0):
         self.destroy()
 
@@ -132,3 +151,5 @@ class App(customtkinter.CTk):
 if __name__ == "__main__":
     app = App()
     app.start()
+
+
