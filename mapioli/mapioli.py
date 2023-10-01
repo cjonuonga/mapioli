@@ -1,5 +1,6 @@
 # lets goooooo
 import customtkinter
+import tkinter as tk
 from tkintermapview import TkinterMapView
 
 customtkinter.set_default_color_theme("blue")
@@ -53,22 +54,34 @@ class App(customtkinter.CTk):
                                                 command=self.clear_marker)
         self.button_2.grid(pady=(20, 0), padx=(20, 20), row=1, column=0)
 
+        # ========== Hikes Completed ==============
+        self.button_3 = customtkinter.CTkButton(master=self.frame_left,
+                                                text="Hikes Completed",
+                                                command=self.hikes_completed)
+        self.button_3.grid(pady=(20,0), padx=(20,20), row=2, column=0)
+
+        # ========== Hikes to Complete =============
+        self.button_4 = customtkinter.CTkButton(master=self.frame_left,
+                                                text="Hikes to Complete",
+                                                command=self.htclp)
+        self.button_4.grid(pady=(20,0), padx=(20,20), row=3, column=0)
+
         # ========== Map Type Selection w/ drop down menu ==========
         #   - OpenStreetMap
         #   - Google Default
         #   - Google Sattelite
         self.map_label = customtkinter.CTkLabel(self.frame_left, text="Map Type:", anchor="w")
-        self.map_label.grid(row=3, column=0, padx=(20, 20), pady=(20, 0))
+        self.map_label.grid(row=4, column=0, padx=(20, 20), pady=(20, 0))
         self.map_option_menu = customtkinter.CTkOptionMenu(self.frame_left, values=["OpenStreetMap", "Google Default", "Google Satellite"],
                                                                        command=self.map_type_selection)
-        self.map_option_menu.grid(row=4, column=0, padx=(20, 20), pady=(10, 0))
+        self.map_option_menu.grid(row=5, column=0, padx=(20, 20), pady=(10, 0))
 
         # ========== Theme Selection w/ drop down menu ==========
         self.appearance_mode_label = customtkinter.CTkLabel(self.frame_left, text="Theme", anchor="w")
-        self.appearance_mode_label.grid(row=5, column=0, padx=(20, 20), pady=(20, 0))
+        self.appearance_mode_label.grid(row=6, column=0, padx=(20, 20), pady=(20, 0))
         self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(self.frame_left, values=["Light", "Dark", "Default"],
                                                                        command=self.theme_selection)
-        self.appearance_mode_optionemenu.grid(row=6, column=0, padx=(20, 20), pady=(10, 20))
+        self.appearance_mode_optionemenu.grid(row=7, column=0, padx=(20, 20), pady=(10, 20))
 
         # ============ right frame ============
         self.frame_right.grid_rowconfigure(1, weight=1)
@@ -80,6 +93,7 @@ class App(customtkinter.CTk):
         self.map_widget = TkinterMapView(self.frame_right, corner_radius=0)
         self.map_widget.grid(row=1, rowspan=1, column=0, columnspan=3, sticky="nswe", padx=(0, 0), pady=(0, 0))
 
+        # ============= Search Entry & Button ============
         self.entry = customtkinter.CTkEntry(master=self.frame_right,
                                             placeholder_text="Type Hiking Trail")
         self.entry.grid(row=0, column=0, sticky="we", padx=(12, 0), pady=12)
@@ -90,6 +104,12 @@ class App(customtkinter.CTk):
                                                 width=90,
                                                 command=self.search_event)
         self.button_5.grid(row=0, column=1, sticky="w", padx=(12, 0), pady=12)
+
+        # ============= Add Trail Button ================
+        self.button_6 = customtkinter.CTkButton(master=self.frame_right,
+                                                text="Add Trail",
+                                                width=60)
+        self.button_6.grid(row=0, column=2, sticky='w', padx=(12,0), pady=12)
 
         # ========== Default Map Location ==========
         self.map_widget.set_address("San Francisco")
@@ -122,21 +142,37 @@ class App(customtkinter.CTk):
         elif new_map == "Google Satellite":
             self.map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
+    # ======== Hikes To Complete Landing Page ===========
 
+    def htclp(self):
+        self.hikes_2_c = tk.Toplevel(self)
+        self.hikes_2_c.title("Hikes To Complete")
+
+        self.label_1 = tk.Label(self.hikes_2_c, text="a list of what hikes we need to do.")
+        self.label_1.grid(row=0, column=0)
+        self.label_1.pack()
+        self.hikes_2_c.mainloop()
+
+    # ======= Hikes Completed Landing Page =========
+    def hikes_completed(self):
+        self.hikesC = tk.Toplevel(self)
+        self.hikesC.title("Hikes Completed")
+        
+        self.label_2 = tk.Label(self.hikesC, text="a list of hikes we've completed + their coordinates")
+        self.label_2.grid(row=0,column=0)
+        self.label_2.pack()
+        self.hikesC.mainloop()
     ''' 
-    NEXT STEPS:
-    -----------
-    - We're going to need some type of database slq, mongodb.
-    - Automatic search filler.
+    NEXT STEPS CHECKLIST:
+    ----------- 
+    - Add button to add the completed hikes w/ the trail coordinates and trail name. -> needs functionality 
+    - We're going to need some type of database slq, mongodb. -> added a file for it
+    - Hikes to visit/complete page. -> both pages created, need to implement mongo and other stuffs
     - Pin Marker (tkinter library).
+    - Highlight hiking trail in addition to marker. We can use the add_polyline() method. 
+    - Automatic search filler.
     - Favorites Section.
     - Pictures for each hiking spot, camera icon.
-    - Highlight hiking trail in addition to marker.
-
-    
-    
-    
-    # hello my name is 
     
     '''
 
