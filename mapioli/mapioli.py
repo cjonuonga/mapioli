@@ -3,7 +3,9 @@ import customtkinter
 import tkinter as tk
 from tkintermapview import TkinterMapView
 
+
 customtkinter.set_default_color_theme("blue")
+
 
 
 class App(customtkinter.CTk):
@@ -11,6 +13,7 @@ class App(customtkinter.CTk):
     APP_NAME = "MAPIOLI"
     WIDTH = 800
     HEIGHT = 500
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -166,7 +169,7 @@ class App(customtkinter.CTk):
     NEXT STEPS CHECKLIST:
     ----------- 
     - Add button to add the completed hikes w/ the trail coordinates and trail name. -> needs functionality 
-    - We're going to need some type of database slq, mongodb. -> added a file for it
+    - !!! We're going to need some type of database slq, mongodb. -> added a file for it LOOK AT 'hike_db.py' FILLEEE !!
     - Hikes to visit/complete page. -> both pages created, need to implement mongo and other stuffs
     - Pin Marker (tkinter library).
     - Highlight hiking trail in addition to marker. We can use the add_polyline() method. 
