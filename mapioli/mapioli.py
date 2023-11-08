@@ -108,11 +108,16 @@ class App(customtkinter.CTk):
                                                 command=self.search_event)
         self.button_5.grid(row=0, column=1, sticky="w", padx=(12, 0), pady=12)
 
+        # ============= Coordinates Entry ================
+        self.entry = customtkinter.CTkEntry(master=self.frame_right,
+                                            placeholder_text="Paste Coordinates")
+        self.entry.grid(row=2, column=0, sticky="we", padx=(12, 0), pady=12)
+
         # ============= Add Trail Button ================
         self.button_6 = customtkinter.CTkButton(master=self.frame_right,
                                                 text="Add Trail",
                                                 width=60)
-        self.button_6.grid(row=0, column=2, sticky='w', padx=(12,0), pady=12)
+        self.button_6.grid(row=2, column=1, sticky='w', padx=(12,0), pady=12)
 
         # ========== Default Map Location ==========
         self.map_widget.set_address("San Francisco")
