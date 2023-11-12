@@ -53,8 +53,8 @@ class App(customtkinter.CTk):
 
         # ========== Clear Marker Button ==========
         self.button_2 = customtkinter.CTkButton(master=self.frame_left,
-                                                text="Clear Markers",
-                                                command=self.clear_marker)
+                                                text="Delete Marker",
+                                                command=self.delete_recent_marker)
         self.button_2.grid(pady=(20, 0), padx=(20, 20), row=1, column=0)
 
         # ========== Hikes Completed ==============
@@ -132,11 +132,15 @@ class App(customtkinter.CTk):
     def set_marker(self):
         current_position = self.map_widget.get_position()
         self.marker_list.append(self.map_widget.set_marker(current_position[0], current_position[1]))
+        current_position.permanent = True
 
-        # ===== Clear Marker Method =====
-    def clear_marker(self):
-        for marker in self.marker_list:
-            marker.delete()
+        # ===== Delete Most Recent Marker Method =====
+    def delete_recent_marker(self):
+        try:
+            recent_marker = self.marker_list.pop()
+            recent_marker.delete()
+        except IndexError:
+            pass
 
         # ===== Change Theme Function =====
     def theme_selection(self, new_appearance_mode: str):
