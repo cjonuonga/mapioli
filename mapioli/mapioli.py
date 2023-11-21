@@ -1,7 +1,9 @@
 # lets goooooo
-import customtkinter
 import tkinter as tk
+import tkintermapview
 from tkintermapview import TkinterMapView
+import customtkinter
+from hike_db import *
 
 
 customtkinter.set_default_color_theme("blue")
@@ -29,8 +31,16 @@ class App(customtkinter.CTk):
 
         self.marker_list = []
 
-        # ============ creation of left and right frame ============
+        
 
+            # DB functionality
+
+            #insert_hike_doc(hike_t, hike_c)
+
+            #self.e1.delete(0, tk.END)
+            #self.e2.delete(0, tk.END)
+        
+        # ============ creation of left and right frame ============
         self.grid_columnconfigure(0, weight=0)
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
@@ -40,6 +50,7 @@ class App(customtkinter.CTk):
 
         self.frame_right = customtkinter.CTkFrame(master=self, corner_radius=0)
         self.frame_right.grid(row=0, column=1, rowspan=1, pady=0, padx=0, sticky="nsew")
+        
 
         # ============ left frame ============
 
@@ -97,10 +108,10 @@ class App(customtkinter.CTk):
         self.map_widget.grid(row=1, rowspan=1, column=0, columnspan=3, sticky="nswe", padx=(0, 0), pady=(0, 0))
 
         # ============= Search Entry & Button ============
-        self.entry = customtkinter.CTkEntry(master=self.frame_right,
+        self.e1 = customtkinter.CTkEntry(master=self.frame_right,
                                             placeholder_text="Type Hiking Trail")
-        self.entry.grid(row=0, column=0, sticky="we", padx=(12, 0), pady=12)
-        self.entry.bind("<Return>", self.search_event)
+        self.e1.grid(row=0, column=0, sticky="we", padx=(12, 0), pady=12)
+        self.e1.bind("<Return>", self.search_event)
 
         self.button_5 = customtkinter.CTkButton(master=self.frame_right,
                                                 text="Search",
@@ -109,14 +120,14 @@ class App(customtkinter.CTk):
         self.button_5.grid(row=0, column=1, sticky="w", padx=(12, 0), pady=12)
 
         # ============= Coordinates Entry ================
-        self.entry = customtkinter.CTkEntry(master=self.frame_right,
+        self.e2 = customtkinter.CTkEntry(master=self.frame_right,
                                             placeholder_text="Paste Coordinates")
-        self.entry.grid(row=2, column=0, sticky="we", padx=(12, 0), pady=12)
+        self.e2.grid(row=2, column=0, sticky="we", padx=(12, 0), pady=12)
 
         # ============= Add Trail Button ================
         self.button_6 = customtkinter.CTkButton(master=self.frame_right,
                                                 text="Add Trail",
-                                                width=60)
+                                                width=60, command=self.add_hike)
         self.button_6.grid(row=2, column=1, sticky='w', padx=(12,0), pady=12)
 
         # ========== Default Map Location ==========
@@ -124,15 +135,27 @@ class App(customtkinter.CTk):
         self.map_option_menu.set("OpenStreetMap")
         self.appearance_mode_optionemenu.set("Dark")
 
+
+        # DB Functionality
+    def add_hike(self):
+        hike_t = self.e1.get()
+        hike_c = self.e2.get()
+
+        insert_hike_doc(hike_t, hike_c)
+
+        #self.e1.delete(0, tk.END)
+        #self.e2.delete(0, tk.END)
+
+        print("Successfuly Added to DB!")
         # ===== Search Function =====
     def search_event(self, event=None):
-        self.map_widget.set_address(self.entry.get())
+        self.map_widget.set_address(self.e1.get())
 
         # ===== Set Marker Method =====
     def set_marker(self):
         current_position = self.map_widget.get_position()
         self.marker_list.append(self.map_widget.set_marker(current_position[0], current_position[1]))
-        current_position.permanent = True
+        
 
         # ===== Delete Most Recent Marker Method =====
     def delete_recent_marker(self):
@@ -174,17 +197,26 @@ class App(customtkinter.CTk):
         self.label_2.grid(row=0,column=0)
         self.label_2.pack()
         self.hikesC.mainloop()
+
+    
     ''' 
     NEXT STEPS CHECKLIST:
+    ### COMPLETED ###
     ----------- 
-    - Add button to add the completed hikes w/ the trail coordinates and trail name. -> needs functionality 
-    - !!! We're going to need some type of database slq, mongodb. -> added a file for it LOOK AT 'hike_db.py' FILLEEE !!
-    - Hikes to visit/complete page. -> both pages created, need to implement mongo and other stuffs
-    - Pin Marker (tkinter library).
-    - Highlight hiking trail in addition to marker. We can use the add_polyline() method. 
-    - Automatic search filler.
-    - Favorites Section.
-    - Pictures for each hiking spot, camera icon.
+    - (COMPLETED) Add button to add the completed hikes w/ the trail coordinates and trail name. -> needs functionality 
+    - (COMPLETED/ IMPLEMENTED) We're going to need some type of database slq, mongodb. -> added a file for it LOOK AT 'hike_db.py' FILLEEE !!
+    
+    ### IN PROGRESS ###
+    -------------------
+    - (IN PROGRESS) Pin Marker (tkinter library). We want to be able to save the pin to the map even after we kill the app.
+    - (IN PROGRESS) Hikes to visit/complete page. -> both pages created, need to implement mongo and other stuffs
+
+    ### TO DO ###
+    -------------
+    - (TO DO) Highlight hiking trail in addition to marker. We can use the add_polyline() method. 
+    - (TO DO) Automatic search filler.
+    - (TO DO) Favorites Section.
+    - (TO DO) Pictures for each hiking spot, camera icon.
     
     '''
 

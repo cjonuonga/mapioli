@@ -1,4 +1,3 @@
-import pymongo
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -23,14 +22,11 @@ mapioli_db = client.mapdb
 mapped_collections = mapioli_db.list_collection_names()
 #print(mapped_collections)
 
-def insert_hike_doc():
+def insert_hike_doc(hike_t, hike_c):
     collection = mapioli_db.mapped
     mapped_document = {
-        "trail": "test",
-        "coordinates": "test"
+        "trail": hike_t,
+        "coordinates": hike_c 
     }
 
-    inserted_id = collection.insert_one(mapped_document).inserted_id
-    print(inserted_id)
-
-insert_hike_doc()
+    collection.insert_one(mapped_document)
