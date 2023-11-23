@@ -130,6 +130,13 @@ class App(customtkinter.CTk):
                                                 width=60, command=self.add_hike)
         self.button_6.grid(row=2, column=1, sticky='w', padx=(12,0), pady=12)
 
+
+        # ============ Delete Trail Button ===============
+        self.button_7 = customtkinter.CTkButton(master=self.frame_right,
+                                                text="Delete Trail",
+                                                width=60, command=self.delete_hike)
+        self.button_7.grid(row=2, column=2, sticky='w', padx=(12,0), pady=12)
+
         # ========== Default Map Location ==========
         self.map_widget.set_address("San Francisco")
         self.map_option_menu.set("OpenStreetMap")
@@ -137,6 +144,12 @@ class App(customtkinter.CTk):
 
 
         # DB Functionality
+    
+    def delete_hike(self):
+        delete_hike_doc()
+       
+
+    
     def add_hike(self):
         hike_t = self.e1.get()
         hike_c = self.e2.get()
@@ -146,7 +159,6 @@ class App(customtkinter.CTk):
         #self.e1.delete(0, tk.END)
         #self.e2.delete(0, tk.END)
 
-        print("Successfuly Added to DB!")
         # ===== Search Function =====
     def search_event(self, event=None):
         self.map_widget.set_address(self.e1.get())
@@ -204,7 +216,8 @@ class App(customtkinter.CTk):
     ### COMPLETED ###
     ----------- 
     - (COMPLETED) Add button to add the completed hikes w/ the trail coordinates and trail name. -> needs functionality 
-    - (COMPLETED/ IMPLEMENTED) We're going to need some type of database slq, mongodb. -> added a file for it LOOK AT 'hike_db.py' FILLEEE !!
+    - (COMPLETED) We're going to need some type of database slq, mongodb. -> added a file for it LOOK AT 'hike_db.py' FILLEEE !!
+    - (COMPLETED) Delete button to remove any completed hikes and trail coordinates from the database.
     
     ### IN PROGRESS ###
     -------------------
